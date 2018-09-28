@@ -56,28 +56,37 @@ void setMotor(boolean reverse)
   digitalWrite(in2Pin, reverse);
 }
 
+void stopMotor()
+{
+  analogWrite(enablePin, 0);
+  digitalWrite(in1Pin, false);
+  digitalWrite(in2Pin, false);
+}
+
 void checkSwitchPinA() {
   if (digitalRead(switchPinA) == HIGH && digitalRead(switchPinB) == LOW) {
+    stopMotor();
     #ifdef DEBUG
       Serial.println(F("Executing Switch Pin A"));
       Serial.flush();
     #endif
     enableSwitchPinA = false;
     enableSwitchPinB = true;
-    delay(random(5,12) * 1000);
+    delay(random(3,7) * 1000);
     reverse = ! reverse;
   }
 }
 
 void checkSwitchPinB() {
   if (digitalRead(switchPinB) == HIGH && digitalRead(switchPinA) == LOW) {
+    stopMotor();
     #ifdef DEBUG
-      Serial.println(F("Executing Switch Pin A"));
+      Serial.println(F("Executing Switch Pin B"));
       Serial.flush();
     #endif
     enableSwitchPinA = true;
     enableSwitchPinB = false;
-    delay(random(5,12) * 1000);
+    delay(random(3,7) * 1000);
     reverse = ! reverse;
   }
 }
